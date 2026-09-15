@@ -15,6 +15,7 @@ public class FileService {
     private static final Path FILES_DIRECTORY = Path.of("data/files");
     private static final Path FILE_FILES = Path.of("data/files.txt");
     private final Scanner scanner;
+    LogService logService = new LogService();
 
     public FileService(Scanner scanner) {
         this.scanner = scanner;
@@ -44,7 +45,7 @@ public class FileService {
             Files.createFile(filePath);
 
             LinFile file = new LinFile(name, owner, Permission.Normale);
-            
+
 
             String fileWrite = "rwd|" + Permission.Normale.getValue() + " " + owner + " " + name;
 
@@ -81,6 +82,7 @@ public class FileService {
 
             if (!Files.exists(filePath)) {
                 System.out.println("You don't have this file");
+                logService.log(owner, "LECTURE", fileName, false);
                 return;
             }
 
@@ -95,6 +97,7 @@ public class FileService {
 
                 if (!permission.getValue().contains("r")) {
                     System.out.println("u dont have permission");
+                    logService.log(owner, "LECTURE", fileName, false);
                     return;
                 }
             }
@@ -106,8 +109,10 @@ public class FileService {
             }
 
             System.out.println(content);
+            logService.log(owner, "LECTURE", fileName, true);
 
         } catch (Exception e) {
+            logService.log(owner, "LECTURE", fileName, false);
             System.out.println("u dont have files" + e.getMessage());
         }
     }
