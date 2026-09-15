@@ -29,7 +29,7 @@ public class ConsoleApp {
         System.out.println("============================================");
         System.out.println("        Bienvenue dans LinePermission");
         System.out.println("============================================");
-        System.out.println("Commandes : signup | login | help | exit" + "\n");
+        System.out.println("Commandes : signup | login | stats | help | exit" + "\n");
 
         while (true) {
 
