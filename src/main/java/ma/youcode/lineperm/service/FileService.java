@@ -198,11 +198,13 @@ public class FileService {
 
             if (file == null) {
                 System.out.println("File not found");
+                logService.log(owner, "EDIT PERMISSION", fileName, false);
                 return;
             }
 
             if (!file.getOwner().equals(owner)) {
                 System.out.println("You are not the owner of this file");
+                logService.log(owner, "EDIT PERMISSION", fileName, false);
                 return;
             }
 
@@ -221,6 +223,7 @@ public class FileService {
 
                 default:
                     System.out.println("Invalid permission value. Use 'r', 'rw','-'");
+                    logService.log(owner, "EDIT PERMISSION", fileName, false);
                     break;
             }
 
@@ -234,9 +237,11 @@ public class FileService {
                 }
             }
             Files.write(FILE_FILES, lines);
+            logService.log(owner, "EDIT PERMISSION", fileName, true);
             System.out.println("Permission updated for file: " + fileName + " to " + permission.getValue());
 
         } catch (Exception e) {
+            logService.log(owner, "EDIT PERMISSION", fileName, false);
             System.out.println("Error updating permissions in files.txt: " + e.getMessage());
         }
     }
