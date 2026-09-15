@@ -36,6 +36,7 @@ public class FileService {
 
             if (Files.exists(filePath)) {
                 System.out.println("le fichie existe");
+
                 return null;
 
             }
@@ -43,6 +44,7 @@ public class FileService {
             Files.createFile(filePath);
 
             LinFile file = new LinFile(name, owner, Permission.Normale);
+            
 
             String fileWrite = "rwd|" + Permission.Normale.getValue() + " " + owner + " " + name;
 
