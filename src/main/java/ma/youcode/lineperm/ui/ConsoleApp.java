@@ -230,19 +230,19 @@ public class ConsoleApp {
                     break;
 
                 case "3":
-                    // System.out.println(
-                    // "Utilisateurs distincts : "
-                    // + logService.countDistinctUsers());
+                    System.out.println(
+                    "Utilisateurs distincts : "
+                    + logService.countDistinctUsers());
                     break;
 
                 case "4":
-                    // System.out.println(
-                    // logService.actionsByUser());
+                    System.out.println(
+                    logService.actionsByUser());
                     break;
 
                 case "5":
-                    // System.out.println(
-                    // logService.top3Files());
+                    System.out.println(
+                    logService.top3Files());
                     break;
 
                 case "6":

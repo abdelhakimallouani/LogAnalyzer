@@ -7,8 +7,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import ma.youcode.lineperm.model.AccessLog;
+
 
 public class LogService {
     private static final Path LOG_FILE = Path.of("data/access.log");
@@ -61,5 +64,17 @@ public class LogService {
 
     public long countRefused(){
         return  logs.stream().filter(log -> !log.getResultat()).count();
+    }
+
+    public long countDistinctUsers(){
+        return logs.stream().map(AccessLog::getUtilisateur).distinct().count();
+    }
+
+    public Map<String, Long> actionsByUser(){
+        return logs.stream().collect(Collectors.groupingBy(AccessLog::getUtilisateur,Collectors.counting()));
+    }
+
+    public Map<String, Long> top3Files(){
+        return logs.stream().collect(Collectors.groupingBy(AccessLog::getFichier,Collectors.counting()));
     }
 }
