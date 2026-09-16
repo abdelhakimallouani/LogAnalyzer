@@ -45,7 +45,7 @@ public class LogService {
 
                 String[] parts = line.split(";");
 
-                AccessLog log = new AccessLog(parts[2], parts[3], parts[4], parts[4].equals("OK"));
+                AccessLog log = new AccessLog(parts[2], parts[3], parts[4], parts[5].equals("OK"));
 
                 logs.add(log);
 
