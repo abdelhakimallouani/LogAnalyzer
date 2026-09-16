@@ -245,4 +245,8 @@ public class FileService {
             System.out.println("Error updating permissions in files.txt: " + e.getMessage());
         }
     }
+
+    public void stats(){
+        
+    }
 }
