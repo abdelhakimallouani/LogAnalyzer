@@ -252,7 +252,7 @@ public class ConsoleApp {
                     break;
 
                 case "7":
-                    // showMostActiveUser();
+                    showMostActiveUser();
                     break;
 
                 case "8":
@@ -275,6 +275,12 @@ public class ConsoleApp {
 
         // System.out.println(nomuser);
 
-         logService.refusedByUser(nomuser).forEach(System.out::println);
+        logService.refusedByUser(nomuser).forEach(System.out::println);
     }
+
+    public void showMostActiveUser(){
+        System.out.println(logService.showMostActiveUser().orElse("Aucun utilisateur"));
+    }
+
+
 }

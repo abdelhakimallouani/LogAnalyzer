@@ -1,5 +1,6 @@
 package ma.youcode.lineperm.service;
 
+import java.lang.classfile.ClassFile.Option;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -8,6 +9,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import ma.youcode.lineperm.model.AccessLog;
@@ -80,5 +82,9 @@ public class LogService {
 
     public List<AccessLog> refusedByUser(String username){
         return logs.stream().filter(log -> log.getUtilisateur().equalsIgnoreCase(username) && !log.getResultat()).toList();
+    }
+
+    public Optional<String> showMostActiveUser(){
+        return logs.stream().collect(Collectors.groupingBy(AccessLog::getUtilisateur, Collectors.counting())).entrySet().stream().max(Map.Entry.comparingByValue()).map(entry -> entry.getKey()+ " (" + entry.getValue() + " actions)");
     }
 }
