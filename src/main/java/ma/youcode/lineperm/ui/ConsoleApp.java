@@ -1,9 +1,11 @@
 package ma.youcode.lineperm.ui;
 
+import ma.youcode.lineperm.model.AccessLog;
 import ma.youcode.lineperm.model.LinFile;
 import ma.youcode.lineperm.model.User;
 import ma.youcode.lineperm.service.UserService;
 
+import java.util.List;
 import java.util.Scanner;
 
 import ma.youcode.lineperm.service.FileService;
@@ -219,34 +221,34 @@ public class ConsoleApp {
 
                 case "1":
                     System.out.println(
-                    "Nombre total d'actions : "
-                    + logService.countActions());
+                            "Nombre total d'actions : "
+                                    + logService.countActions());
                     break;
 
                 case "2":
                     System.out.println(
-                    "Nombre d'acces refuses : "
-                    + logService.countRefused());
+                            "Nombre d'acces refuses : "
+                                    + logService.countRefused());
                     break;
 
                 case "3":
                     System.out.println(
-                    "Utilisateurs distincts : "
-                    + logService.countDistinctUsers());
+                            "Utilisateurs distincts : "
+                                    + logService.countDistinctUsers());
                     break;
 
                 case "4":
                     System.out.println(
-                    logService.actionsByUser());
+                            logService.actionsByUser());
                     break;
 
                 case "5":
                     System.out.println(
-                    logService.top3Files());
+                            logService.top3Files());
                     break;
 
                 case "6":
-                    // refusedByUser();
+                    refusedByUser();
                     break;
 
                 case "7":
@@ -265,5 +267,14 @@ public class ConsoleApp {
                     System.out.println("Choix invalide.");
             }
         }
+    }
+
+    public void refusedByUser() {
+        System.out.println("Enter le Utilisateur :");
+        String nomuser = scanner.nextLine();
+
+        // System.out.println(nomuser);
+
+         logService.refusedByUser(nomuser).forEach(System.out::println);
     }
 }

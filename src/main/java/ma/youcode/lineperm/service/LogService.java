@@ -77,4 +77,8 @@ public class LogService {
     public Map<String, Long> top3Files(){
         return logs.stream().collect(Collectors.groupingBy(AccessLog::getFichier,Collectors.counting()));
     }
+
+    public List<AccessLog> refusedByUser(String username){
+        return logs.stream().filter(log -> log.getUtilisateur().equalsIgnoreCase(username) && !log.getResultat()).toList();
+    }
 }
