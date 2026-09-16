@@ -7,6 +7,7 @@ import ma.youcode.lineperm.service.UserService;
 import java.util.Scanner;
 
 import ma.youcode.lineperm.service.FileService;
+import ma.youcode.lineperm.service.LogService;
 import ma.youcode.lineperm.service.FileService;
 
 public class ConsoleApp {
@@ -14,12 +15,14 @@ public class ConsoleApp {
     private final Scanner scanner;
     private final UserService userService;
     private final FileService fileService;
+    private final LogService logService;
 
     private User currentUser;
 
     public ConsoleApp() {
         scanner = new Scanner(System.in);
         userService = new UserService();
+        logService = new LogService();
         fileService = new FileService(scanner);
         currentUser = null;
     }
@@ -215,15 +218,15 @@ public class ConsoleApp {
             switch (choix.trim()) {
 
                 case "1":
-                    // System.out.println(
-                    // "Nombre total d'actions : "
-                    // + logService.countActions());
+                    System.out.println(
+                    "Nombre total d'actions : "
+                    + logService.countActions());
                     break;
 
                 case "2":
-                    // System.out.println(
-                    // "Nombre d'acces refuses : "
-                    // + logService.countRefused());
+                    System.out.println(
+                    "Nombre d'acces refuses : "
+                    + logService.countRefused());
                     break;
 
                 case "3":
