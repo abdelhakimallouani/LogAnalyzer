@@ -256,8 +256,8 @@ public class ConsoleApp {
                     break;
 
                 case "8":
-                    // System.out.println(
-                    // logService.actionsByType());
+                    System.out.println(
+                    logService.actionsByType());
                     break;
 
                 case "0":
