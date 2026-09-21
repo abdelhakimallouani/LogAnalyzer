@@ -1,12 +1,15 @@
 package ma.youcode.lineperm.ui;
 
+import ma.youcode.lineperm.model.AccessLog;
 import ma.youcode.lineperm.model.LinFile;
 import ma.youcode.lineperm.model.User;
 import ma.youcode.lineperm.service.UserService;
 
+import java.util.List;
 import java.util.Scanner;
 
 import ma.youcode.lineperm.service.FileService;
+import ma.youcode.lineperm.service.LogService;
 import ma.youcode.lineperm.service.FileService;
 
 public class ConsoleApp {
@@ -14,12 +17,14 @@ public class ConsoleApp {
     private final Scanner scanner;
     private final UserService userService;
     private final FileService fileService;
+    private final LogService logService;
 
     private User currentUser;
 
     public ConsoleApp() {
         scanner = new Scanner(System.in);
         userService = new UserService();
+        logService = new LogService();
         fileService = new FileService(scanner);
         currentUser = null;
     }
@@ -77,6 +82,9 @@ public class ConsoleApp {
                     break;
                 case "chmod":
                     chmod(mots);
+                    break;
+                case "stats":
+                    stats();
                     break;
                 case "exit":
                     System.out.println("Au revoir.");
@@ -187,4 +195,92 @@ public class ConsoleApp {
 
         fileService.chmod(fileName, permission, currentUser.getLogin());
     }
+
+    private void stats() {
+
+        while (true) {
+
+            System.out.println();
+            System.out.println("========== STATISTIQUES ==========");
+            System.out.println("1. Nombre total d'actions");
+            System.out.println("2. Nombre d'acces refuses");
+            System.out.println("3. Utilisateurs distincts");
+            System.out.println("4. Actions par utilisateur");
+            System.out.println("5. Top 3 des fichiers consultes");
+            System.out.println("6. Acces refuses d'un utilisateur");
+            System.out.println("7. Utilisateur le plus actif");
+            System.out.println("8. Repartition des actions par type");
+            System.out.println("0. Retour");
+            System.out.println("==================================");
+
+            System.out.print("Choix : ");
+
+            String choix = scanner.nextLine();
+
+            switch (choix.trim()) {
+
+                case "1":
+                    System.out.println(
+                            "Nombre total d'actions : "
+                                    + logService.countActions());
+                    break;
+
+                case "2":
+                    System.out.println(
+                            "Nombre d'acces refuses : "
+                                    + logService.countRefused());
+                    break;
+
+                case "3":
+                    System.out.println(
+                            "Utilisateurs distincts : "
+                                    + logService.countDistinctUsers());
+                    break;
+
+                case "4":
+                    System.out.println(
+                            logService.actionsByUser());
+                    break;
+
+                case "5":
+                    System.out.println(
+                            logService.top3Files());
+                    break;
+
+                case "6":
+                    refusedByUser();
+                    break;
+
+                case "7":
+                    showMostActiveUser();
+                    break;
+
+                case "8":
+                    System.out.println(
+                    logService.actionsByType());
+                    break;
+
+                case "0":
+                    return;
+
+                default:
+                    System.out.println("Choix invalide.");
+            }
+        }
+    }
+
+    public void refusedByUser() {
+        System.out.println("Enter le Utilisateur :");
+        String nomuser = scanner.nextLine();
+
+        // System.out.println(nomuser);
+
+        logService.refusedByUser(nomuser).forEach(System.out::println);
+    }
+
+    public void showMostActiveUser(){
+        System.out.println(logService.showMostActiveUser().orElse("Aucun utilisateur"));
+    }
+
+
 }

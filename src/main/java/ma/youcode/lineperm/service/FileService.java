@@ -15,6 +15,7 @@ public class FileService {
     private static final Path FILES_DIRECTORY = Path.of("data/files");
     private static final Path FILE_FILES = Path.of("data/files.txt");
     private final Scanner scanner;
+    LogService logService = new LogService();
 
     public FileService(Scanner scanner) {
         this.scanner = scanner;
@@ -31,7 +32,7 @@ public class FileService {
     public LinFile touch(String name, String owner) {
 
         try {
-            
+
             Path filePath = FILES_DIRECTORY.resolve(name);
 
             if (Files.exists(filePath)) {
@@ -44,7 +45,6 @@ public class FileService {
             Files.createFile(filePath);
 
             LinFile file = new LinFile(name, owner, Permission.Normale);
-            
 
             String fileWrite = "rwd|" + Permission.Normale.getValue() + " " + owner + " " + name;
 
@@ -81,6 +81,7 @@ public class FileService {
 
             if (!Files.exists(filePath)) {
                 System.out.println("You don't have this file");
+                logService.log(owner, "LECTURE", fileName, false);
                 return;
             }
 
@@ -95,6 +96,7 @@ public class FileService {
 
                 if (!permission.getValue().contains("r")) {
                     System.out.println("u dont have permission");
+                    logService.log(owner, "LECTURE", fileName, false);
                     return;
                 }
             }
@@ -106,8 +108,10 @@ public class FileService {
             }
 
             System.out.println(content);
+            logService.log(owner, "LECTURE", fileName, true);
 
         } catch (Exception e) {
+            logService.log(owner, "LECTURE", fileName, false);
             System.out.println("u dont have files" + e.getMessage());
         }
     }
@@ -119,6 +123,7 @@ public class FileService {
 
         if (!Files.exists(filePath)) {
             System.out.println("You don't have this file");
+            logService.log(owner, "LECTURE", fileName, false);
             return;
         }
 
@@ -135,6 +140,7 @@ public class FileService {
 
             if (!permission.getValue().contains("rw")) {
                 System.out.println("u dont have permission");
+                logService.log(owner, "EDIT", fileName, false);
                 return;
             }
         }
@@ -146,12 +152,11 @@ public class FileService {
             String oldContent = Files.readString(filePath);
 
             if (oldContent.isEmpty()) {
-
                 System.out.println("file is vide ");
-
+                logService.log(owner, "EDIT", fileName, false);
             } else {
-
                 System.out.println(oldContent);
+                logService.log(owner, "EDIT", fileName, true);
             }
 
             StringBuilder content = new StringBuilder();
@@ -174,10 +179,12 @@ public class FileService {
             }
 
             Files.writeString(filePath, content, StandardOpenOption.APPEND);
+            logService.log(owner, "EDIT", fileName, true);
 
             System.out.println("File : " + fileName + ", enregister (" + lineCount + " ligne)");
 
         } catch (Exception e) {
+            logService.log(owner, "EDIT", fileName, false);
             System.out.println("Erreur lors de l'édition : " + e.getMessage());
         }
 
@@ -191,11 +198,13 @@ public class FileService {
 
             if (file == null) {
                 System.out.println("File not found");
+                logService.log(owner, "EDIT PERMISSION", fileName, false);
                 return;
             }
 
             if (!file.getOwner().equals(owner)) {
                 System.out.println("You are not the owner of this file");
+                logService.log(owner, "EDIT PERMISSION", fileName, false);
                 return;
             }
 
@@ -214,23 +223,30 @@ public class FileService {
 
                 default:
                     System.out.println("Invalid permission value. Use 'r', 'rw','-'");
+                    logService.log(owner, "EDIT PERMISSION", fileName, false);
                     break;
             }
 
             file.setPermission(permission);
-             List<String> lines = Files.readAllLines(FILE_FILES);
-            for(int i=0; i<lines.size(); i++){
+            List<String> lines = Files.readAllLines(FILE_FILES);
+            for (int i = 0; i < lines.size(); i++) {
                 String[] parts = lines.get(i).split(" ", 3);
-                if(parts.length == 3 && parts[1].equals(owner) && parts[2].equals(fileName)){
+                if (parts.length == 3 && parts[1].equals(owner) && parts[2].equals(fileName)) {
                     lines.set(i, "rwd|" + permission.getValue() + " " + owner + " " + fileName);
                     break;
                 }
             }
             Files.write(FILE_FILES, lines);
+            logService.log(owner, "EDIT PERMISSION", fileName, true);
             System.out.println("Permission updated for file: " + fileName + " to " + permission.getValue());
 
         } catch (Exception e) {
+            logService.log(owner, "EDIT PERMISSION", fileName, false);
             System.out.println("Error updating permissions in files.txt: " + e.getMessage());
         }
+    }
+
+    public void stats(){
+        
     }
 }
