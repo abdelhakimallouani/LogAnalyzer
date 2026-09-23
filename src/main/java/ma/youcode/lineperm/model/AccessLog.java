@@ -5,15 +5,22 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class AccessLog {
-    private final Long id;
-    private final Long userId;
-    private final Long fileId;
-    private final String action;
-    private final String fichier;
-    private final Boolean resultat;
-    private final LocalDate date = LocalDate.now();
-    private final String heure = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
+    private Long id;
+    private Long userId;
+    private Long fileId;
+    private String action;
+    private String fichier;
+    private Boolean resultat;
+    private LocalDate date = LocalDate.now();
+    private String heure = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
 
+    public AccessLog(Long userId, Long fileId, String action, String fichier, Boolean resultat) {
+        this.userId = userId;
+        this.fileId =fileId;
+        this.action = action;
+        this.fichier = fichier;
+        this.resultat = resultat;
+    }
     public AccessLog(Long id, Long userId, Long fileId, String action, String fichier, Boolean resultat) {
         this.id=id;
         this.userId = userId;
@@ -54,6 +61,7 @@ public class AccessLog {
     }
 
     public String toString() {
+        // return  date + ";" + heure + ";" + userId + ";" + action + ";" + fichier + ";" + (resultat ? "OK" : "REFUSED");
         return  date + ";" + heure + ";" + userId + ";" + action + ";" + fichier + ";" + (resultat ? "OK" : "REFUSED");
     }
 }

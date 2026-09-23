@@ -4,12 +4,17 @@ import ma.youcode.lineperm.enums.Permission;
 
 
 public class LinFile {
-    private final Long id;
-    private final String name;
-    private final Long ownerId;
+    private Long id;
+    private String name;
+    private Long ownerId;
     private Permission permission;
 
 
+    public LinFile(String name, Long ownerId,Permission permission) {
+        this.name = name;
+        this.ownerId = ownerId;
+        this.permission = permission;
+    }
     public LinFile(Long id,String name, Long ownerId,Permission permission) {
         this.id=id;
         this.name = name;
