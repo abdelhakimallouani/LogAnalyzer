@@ -1,76 +1,88 @@
-// package ma.youcode.lineperm.service;
+package ma.youcode.lineperm.service;
 
-// import ma.youcode.lineperm.enums.Permission;
-// import ma.youcode.lineperm.model.LinFile;
-// import ma.youcode.lineperm.model.User;
+import ma.youcode.lineperm.dao.FichierDao;
+import ma.youcode.lineperm.enums.Permission;
+import ma.youcode.lineperm.model.LinFile;
+import ma.youcode.lineperm.model.User;
 
-// import java.util.*;
-// import java.io.File;
-// import java.nio.file.Files;
-// import java.nio.file.Path;
-// import java.nio.file.StandardOpenOption;
+import java.util.*;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
-// public class FileService {
+public class FileService {
 
-//     private static final Path FILES_DIRECTORY = Path.of("data/files");
-//     private static final Path FILE_FILES = Path.of("data/files.txt");
-//     private final Scanner scanner;
-//     LogService logService = new LogService();
+    private static final Path FILES_DIRECTORY = Path.of("data/files");
+    // private final Scanner scanner;
+    private final FichierDao fichierDao;
 
-//     public FileService(Scanner scanner) {
-//         this.scanner = scanner;
 
-//         try {
-//             if (!Files.exists(FILES_DIRECTORY)) {
-//                 Files.createDirectories(FILES_DIRECTORY);
-//             }
-//         } catch (Exception e) {
-//             System.out.println("Erreur de la creation ");
-//         }
-//     }
+    public FileService() {
 
-//     public LinFile touch(String name, String owner) {
+        fichierDao = new FichierDao();
 
-//         try {
+        try {
+            if (!Files.exists(FILES_DIRECTORY)) {
+                Files.createDirectories(FILES_DIRECTORY);
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur de la creation ");
+        }
+    }
 
-//             Path filePath = FILES_DIRECTORY.resolve(name);
+    public LinFile touch(String name, Long ownerId) {
 
-//             if (Files.exists(filePath)) {
-//                 System.out.println("le fichie existe");
+        try {
 
-//                 return null;
+            Path filePath = FILES_DIRECTORY.resolve(name);
 
-//             }
+            if (Files.exists(filePath)) {
+                System.out.println("le fichie existe");
 
-//             Files.createFile(filePath);
+                return null;
 
-//             LinFile file = new LinFile(name, owner, Permission.Normale);
+            }
 
-//             String fileWrite = "rwd|" + Permission.Normale.getValue() + " " + owner + " " + name;
+            // Optional<LinFile> existFile = fichierDao.findByName(name);
 
-//             Files.writeString(FILE_FILES, fileWrite + System.lineSeparator(), StandardOpenOption.APPEND);
+            // if (existFile.isPresent()) {
+            //     System.out.println("le file existe dans la bdd");
+            // }
 
-//             UserService.filesMap.put(name, file);
+            Files.createFile(filePath);
 
-//             return file;
+            LinFile file = new LinFile(name, ownerId, Permission.Normale);
 
-//         } catch (Exception e) {
-//             System.out.println("Erreur de la creation ");
-//             return null;
-//         }
-//     }
+            LinFile saveFile = fichierDao.save(file);
 
-//     public void ls() {
-//         try {
+            if (saveFile == null) {
+                Files.deleteIfExists(filePath);
+                System.out.println("error of save en db");
+                return null;
+            }
 
-//             String content = Files.readString(FILE_FILES);
+            System.out.println("file" + name + "creer");
 
-//             System.out.println(content);
+            return saveFile;
 
-//         } catch (Exception e) {
-//             System.out.println("u dont have files" + e.getMessage());
-//         }
-//     }
+        } catch (Exception e) {
+            System.out.println("Erreur de la creation ");
+            return null;
+        }
+    }
+
+    public void ls() {
+        try {
+
+            String content = Files.readString(FILE_FILES);
+
+            System.out.println(content);
+
+        } catch (Exception e) {
+            System.out.println("u dont have files" + e.getMessage());
+        }
+    }
 
 //     public void cat(String fileName, String owner) {
 //         try {
@@ -249,4 +261,4 @@
 //     public void stats(){
         
 //     }
-// }
+}

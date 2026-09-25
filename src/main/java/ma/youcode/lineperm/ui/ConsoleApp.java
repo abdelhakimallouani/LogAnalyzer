@@ -8,7 +8,7 @@ import ma.youcode.lineperm.service.UserService;
 import java.util.List;
 import java.util.Scanner;
 
-// import ma.youcode.lineperm.service.FileService;
+import ma.youcode.lineperm.service.FileService;
 // import ma.youcode.lineperm.service.LogService;
 // import ma.youcode.lineperm.service.FileService;
 
@@ -16,7 +16,7 @@ public class ConsoleApp {
 
     private final Scanner scanner;
     private final UserService userService;
-    // private final FileService fileService;
+    private final FileService fileService;
     // private final LogService logService;
 
     private User currentUser;
@@ -25,7 +25,7 @@ public class ConsoleApp {
         scanner = new Scanner(System.in);
         userService = new UserService();
         // logService = new LogService();
-        // fileService = new FileService(scanner);
+        fileService = new FileService();
         currentUser = null;
     }
 
@@ -60,17 +60,17 @@ public class ConsoleApp {
                     login();
                     break;
 
-                // case "logout":
-                //     logout();
-                //     break;
+                case "logout":
+                    logout();
+                    break;
 
-                // case "help":
-                //     help();
-                //     break;
+                case "help":
+                    help();
+                    break;
 
-                // case "touch":
-                //     touch(mots);
-                //     break;
+                case "touch":
+                    touch(mots);
+                    break;
                 // case "ls":
                 //     ls();
                 //     break;
@@ -130,39 +130,39 @@ public class ConsoleApp {
         }
     }
 
-    // private void logout() {
-    //     System.out.println("Deconnecte");
-    //     currentUser = null;
-    // }
+    private void logout() {
+        System.out.println("Deconnecte");
+        currentUser = null;
+    }
 
-    // private void help() {
+    private void help() {
 
-    //     if (currentUser == null) {
-    //         System.out.println("Commandes : signup | login | help | exit");
-    //     } else {
-    //         System.out.println("Commandes : logout | help | exit | touch");
-    //     }
-    // }
+        if (currentUser == null) {
+            System.out.println("Commandes : signup | login | help | exit");
+        } else {
+            System.out.println("Commandes : logout | help | exit | touch");
+        }
+    }
 
-    // private void touch(String[] mots) {
-    //     if (currentUser == null) {
-    //         System.out.println("u are conneted");
-    //         return;
-    //     }
+    private void touch(String[] mots) {
+        if (currentUser == null) {
+            System.out.println("u are conneted");
+            return;
+        }
 
-    //     if (mots.length != 2) {
-    //         System.out.println("Usage : touch <nom_fichier>");
-    //         return;
-    //     }
+        if (mots.length != 2) {
+            System.out.println("Usage : touch <nom_fichier>");
+            return;
+        }
 
-    //     String fileName = mots[1];
+        String fileName = mots[1];
 
-    //     LinFile file = fileService.touch(fileName, currentUser.getLogin());
+        LinFile file = fileService.touch(fileName, currentUser.getId());
 
-    //     if (file != null) {
-    //         System.out.println("Fichier created : " + fileName);
-    //     }
-    // }
+        if (file != null) {
+            System.out.println("Fichier created : " + fileName);
+        }
+    }
 
     // private void ls() {
     //     fileService.ls();
