@@ -71,9 +71,9 @@ public class ConsoleApp {
                 case "touch":
                     touch(mots);
                     break;
-                // case "ls":
-                //     ls();
-                //     break;
+                case "ls":
+                    ls();
+                    break;
                 // case "cat":
                 //     cat(mots[1], currentUser.getLogin());
                 //     break;
@@ -164,9 +164,9 @@ public class ConsoleApp {
         }
     }
 
-    // private void ls() {
-    //     fileService.ls();
-    // }
+    private void ls() {
+        fileService.ls();
+    }
 
     // private void cat(String fileName, String owner) {
     //     fileService.cat(fileName, owner);
