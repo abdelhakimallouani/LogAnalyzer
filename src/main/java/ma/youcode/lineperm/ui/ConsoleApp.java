@@ -56,9 +56,9 @@ public class ConsoleApp {
                     signup();
                     break;
 
-                // case "login":
-                //     login();
-                //     break;
+                case "login":
+                    login();
+                    break;
 
                 // case "logout":
                 //     logout();
@@ -107,28 +107,28 @@ public class ConsoleApp {
         userService.signUp(login, password);
     }
 
-    // private void login() {
+    private void login() {
 
-    //     System.out.print("Login : ");
-    //     String login = scanner.nextLine();
+        System.out.print("Login : ");
+        String login = scanner.nextLine();
 
-    //     System.out.print("Mot de passe : ");
-    //     String password = scanner.nextLine();
+        System.out.print("Mot de passe : ");
+        String password = scanner.nextLine();
 
-    //     try {
-    //         User user = userService.login(login, password);
-    //         currentUser = user;
+        try {
+            User user = userService.login(login, password);
+            currentUser = user;
 
-    //     } catch (Exception e) {
-    //         System.out.println("Erreur lors de la connexion : " + e.getMessage());
-    //     }
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la connexion : " + e.getMessage());
+        }
 
-    //     if (currentUser != null) {
-    //         System.out.println("Bienvenue " + currentUser.getLogin());
-    //         System.out.println("-------------------------------------");
+        if (currentUser != null) {
+            System.out.println("Bienvenue " + currentUser.getLogin());
+            System.out.println("-------------------------------------");
 
-    //     }
-    // }
+        }
+    }
 
     // private void logout() {
     //     System.out.println("Deconnecte");

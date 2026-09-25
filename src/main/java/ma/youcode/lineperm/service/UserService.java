@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.lang.model.element.ModuleElement.UsesDirective;
 
@@ -55,30 +56,39 @@ public class UserService {
         return saveUser;
     }
 
-    // public User login(String login, String password) {
+    public User login(String login, String password) {
 
-    //     if (login == null || login.isEmpty()) {
-    //         System.out.println("login invalide");
-    //         return null;
-    //     }
-    //     if (password == null || password.isEmpty()) {
-    //         System.out.println("password invalide");
-    //         return null;
-    //     }
+        if (login == null || login.isEmpty()) {
+            System.out.println("login invalide");
+            return null;
+        }
+        if (password == null || password.isEmpty()) {
+            System.out.println("password invalide");
+            return null;
+        }
 
-    //     User user = users.get(login.trim());
+        Optional<User> userOpt = userDao.findByLogin(login.trim());
 
-    //     // System.out.println(user);
+        // System.out.println(user);
 
-    //     if (!BCrypt.checkpw(password, user.getPasswordHash())) {
-    //         System.out.println("login ou mot de passe incorrect");
-    //         return null;
-    //     }
+        if(userOpt.isEmpty()){
+            System.out.println("login ou password inccorect");
+            return null;
+        }
 
-    //     System.out.println("login reussi");
+        User user = userOpt.get();
 
-    //     return user;
-    // }
+        boolean passwordCheck = BCrypt.checkpw(password, user.getPasswordHash());
+
+        if (!passwordCheck) {
+            System.out.println("login ou mot de passe incorrect");
+            return null;
+        }
+
+        System.out.println("login reussi");
+
+        return user;
+    }
 
     // private void saveUsers() {
     //     try (BufferedWriter writer = new BufferedWriter(new FileWriter(USERS_FILE))) {

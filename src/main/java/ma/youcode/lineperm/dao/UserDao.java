@@ -1,14 +1,11 @@
 package ma.youcode.lineperm.dao;
 
 import java.sql.*;
+import java.util.Optional;
 
 import ma.youcode.lineperm.model.User;
 
 public class UserDao extends AbstractDao<User> {
-    public UserDao() {
-        System.out.println("User create ");
-        System.out.println("Connection = " + connection);
-    }
 
     @Override
     public User save(User user) {
@@ -33,7 +30,21 @@ public class UserDao extends AbstractDao<User> {
         }
     }
 
-    // public findByUserName(String login){
-    // public String requete = "SELECT "
-    // }
+    public Optional<User> findByLogin(String login) {
+        String sql = "SELECT * FROM users WHERE login = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, login);
+
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                User user = new User(result.getLong("id"), result.getString("login"), result.getString("password"));
+                return Optional.of(user);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error of find by name " + e.getMessage());
+        }
+        return Optional.empty();
+    }
 }
