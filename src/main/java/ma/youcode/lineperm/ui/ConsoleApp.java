@@ -8,24 +8,24 @@ import ma.youcode.lineperm.service.UserService;
 import java.util.List;
 import java.util.Scanner;
 
-import ma.youcode.lineperm.service.FileService;
-import ma.youcode.lineperm.service.LogService;
-import ma.youcode.lineperm.service.FileService;
+// import ma.youcode.lineperm.service.FileService;
+// import ma.youcode.lineperm.service.LogService;
+// import ma.youcode.lineperm.service.FileService;
 
 public class ConsoleApp {
 
     private final Scanner scanner;
     private final UserService userService;
-    private final FileService fileService;
-    private final LogService logService;
+    // private final FileService fileService;
+    // private final LogService logService;
 
     private User currentUser;
 
     public ConsoleApp() {
         scanner = new Scanner(System.in);
         userService = new UserService();
-        logService = new LogService();
-        fileService = new FileService(scanner);
+        // logService = new LogService();
+        // fileService = new FileService(scanner);
         currentUser = null;
     }
 
@@ -56,36 +56,36 @@ public class ConsoleApp {
                     signup();
                     break;
 
-                case "login":
-                    login();
-                    break;
+                // case "login":
+                //     login();
+                //     break;
 
-                case "logout":
-                    logout();
-                    break;
+                // case "logout":
+                //     logout();
+                //     break;
 
-                case "help":
-                    help();
-                    break;
+                // case "help":
+                //     help();
+                //     break;
 
-                case "touch":
-                    touch(mots);
-                    break;
-                case "ls":
-                    ls();
-                    break;
-                case "cat":
-                    cat(mots[1], currentUser.getLogin());
-                    break;
-                case "nano":
-                    nano(mots);
-                    break;
-                case "chmod":
-                    chmod(mots);
-                    break;
-                case "stats":
-                    stats();
-                    break;
+                // case "touch":
+                //     touch(mots);
+                //     break;
+                // case "ls":
+                //     ls();
+                //     break;
+                // case "cat":
+                //     cat(mots[1], currentUser.getLogin());
+                //     break;
+                // case "nano":
+                //     nano(mots);
+                //     break;
+                // case "chmod":
+                //     chmod(mots);
+                //     break;
+                // case "stats":
+                //     stats();
+                //     break;
                 case "exit":
                     System.out.println("Au revoir.");
                     return;
@@ -107,180 +107,179 @@ public class ConsoleApp {
         userService.signUp(login, password);
     }
 
-    private void login() {
+    // private void login() {
 
-        System.out.print("Login : ");
-        String login = scanner.nextLine();
+    //     System.out.print("Login : ");
+    //     String login = scanner.nextLine();
 
-        System.out.print("Mot de passe : ");
-        String password = scanner.nextLine();
+    //     System.out.print("Mot de passe : ");
+    //     String password = scanner.nextLine();
 
-        try {
-            User user = userService.login(login, password);
-            currentUser = user;
+    //     try {
+    //         User user = userService.login(login, password);
+    //         currentUser = user;
 
-        } catch (Exception e) {
-            System.out.println("Erreur lors de la connexion : " + e.getMessage());
-        }
+    //     } catch (Exception e) {
+    //         System.out.println("Erreur lors de la connexion : " + e.getMessage());
+    //     }
 
-        if (currentUser != null) {
-            System.out.println("Bienvenue " + currentUser.getLogin());
-            System.out.println("-------------------------------------");
+    //     if (currentUser != null) {
+    //         System.out.println("Bienvenue " + currentUser.getLogin());
+    //         System.out.println("-------------------------------------");
 
-        }
-    }
+    //     }
+    // }
 
-    private void logout() {
-        System.out.println("Deconnecte");
-        currentUser = null;
-    }
+    // private void logout() {
+    //     System.out.println("Deconnecte");
+    //     currentUser = null;
+    // }
 
-    private void help() {
+    // private void help() {
 
-        if (currentUser == null) {
-            System.out.println("Commandes : signup | login | help | exit");
-        } else {
-            System.out.println("Commandes : logout | help | exit | touch");
-        }
-    }
+    //     if (currentUser == null) {
+    //         System.out.println("Commandes : signup | login | help | exit");
+    //     } else {
+    //         System.out.println("Commandes : logout | help | exit | touch");
+    //     }
+    // }
 
-    private void touch(String[] mots) {
-        if (currentUser == null) {
-            System.out.println("u are conneted");
-            return;
-        }
+    // private void touch(String[] mots) {
+    //     if (currentUser == null) {
+    //         System.out.println("u are conneted");
+    //         return;
+    //     }
 
-        if (mots.length != 2) {
-            System.out.println("Usage : touch <nom_fichier>");
-            return;
-        }
+    //     if (mots.length != 2) {
+    //         System.out.println("Usage : touch <nom_fichier>");
+    //         return;
+    //     }
 
-        String fileName = mots[1];
+    //     String fileName = mots[1];
 
-        LinFile file = fileService.touch(fileName, currentUser.getLogin());
+    //     LinFile file = fileService.touch(fileName, currentUser.getLogin());
 
-        if (file != null) {
-            System.out.println("Fichier created : " + fileName);
-        }
-    }
+    //     if (file != null) {
+    //         System.out.println("Fichier created : " + fileName);
+    //     }
+    // }
 
-    private void ls() {
-        fileService.ls();
-    }
+    // private void ls() {
+    //     fileService.ls();
+    // }
 
-    private void cat(String fileName, String owner) {
-        fileService.cat(fileName, owner);
-    }
+    // private void cat(String fileName, String owner) {
+    //     fileService.cat(fileName, owner);
+    // }
 
-    private void nano(String[] mots) {
+    // private void nano(String[] mots) {
 
-        if (mots.length != 2) {
-            System.out.println("use : nano <file>");
-        }
+    //     if (mots.length != 2) {
+    //         System.out.println("use : nano <file>");
+    //     }
 
-        String fileName = mots[1];
+    //     String fileName = mots[1];
 
-        fileService.nano(fileName, currentUser.getLogin());
+    //     fileService.nano(fileName, currentUser.getLogin());
 
-    }
+    // }
 
-    private void chmod(String[] mots) {
-        if (mots.length != 3) {
-            System.out.println("Usage : chmod <permission> <file>");
-            return;
-        }
+    // private void chmod(String[] mots) {
+    //     if (mots.length != 3) {
+    //         System.out.println("Usage : chmod <permission> <file>");
+    //         return;
+    //     }
 
-        String permission = mots[1];
-        String fileName = mots[2];
+    //     String permission = mots[1];
+    //     String fileName = mots[2];
 
-        fileService.chmod(fileName, permission, currentUser.getLogin());
-    }
+    //     fileService.chmod(fileName, permission, currentUser.getLogin());
+    // }
 
-    private void stats() {
+    // private void stats() {
 
-        while (true) {
+    //     while (true) {
 
-            System.out.println();
-            System.out.println("========== STATISTIQUES ==========");
-            System.out.println("1. Nombre total d'actions");
-            System.out.println("2. Nombre d'acces refuses");
-            System.out.println("3. Utilisateurs distincts");
-            System.out.println("4. Actions par utilisateur");
-            System.out.println("5. Top 3 des fichiers consultes");
-            System.out.println("6. Acces refuses d'un utilisateur");
-            System.out.println("7. Utilisateur le plus actif");
-            System.out.println("8. Repartition des actions par type");
-            System.out.println("0. Retour");
-            System.out.println("==================================");
+    //         System.out.println();
+    //         System.out.println("========== STATISTIQUES ==========");
+    //         System.out.println("1. Nombre total d'actions");
+    //         System.out.println("2. Nombre d'acces refuses");
+    //         System.out.println("3. Utilisateurs distincts");
+    //         System.out.println("4. Actions par utilisateur");
+    //         System.out.println("5. Top 3 des fichiers consultes");
+    //         System.out.println("6. Acces refuses d'un utilisateur");
+    //         System.out.println("7. Utilisateur le plus actif");
+    //         System.out.println("8. Repartition des actions par type");
+    //         System.out.println("0. Retour");
+    //         System.out.println("==================================");
 
-            System.out.print("Choix : ");
+    //         System.out.print("Choix : ");
 
-            String choix = scanner.nextLine();
+    //         String choix = scanner.nextLine();
 
-            switch (choix.trim()) {
+    //         switch (choix.trim()) {
 
-                case "1":
-                    System.out.println(
-                            "Nombre total d'actions : "
-                                    + logService.countActions());
-                    break;
+    //             case "1":
+    //                 System.out.println(
+    //                         "Nombre total d'actions : "
+    //                                 + logService.countActions());
+    //                 break;
 
-                case "2":
-                    System.out.println(
-                            "Nombre d'acces refuses : "
-                                    + logService.countRefused());
-                    break;
+    //             case "2":
+    //                 System.out.println(
+    //                         "Nombre d'acces refuses : "
+    //                                 + logService.countRefused());
+    //                 break;
 
-                case "3":
-                    System.out.println(
-                            "Utilisateurs distincts : "
-                                    + logService.countDistinctUsers());
-                    break;
+    //             case "3":
+    //                 System.out.println(
+    //                         "Utilisateurs distincts : "
+    //                                 + logService.countDistinctUsers());
+    //                 break;
 
-                case "4":
-                    System.out.println(
-                            logService.actionsByUser());
-                    break;
+    //             case "4":
+    //                 System.out.println(
+    //                         logService.actionsByUser());
+    //                 break;
 
-                case "5":
-                    System.out.println(
-                            logService.top3Files());
-                    break;
+    //             case "5":
+    //                 System.out.println(
+    //                         logService.top3Files());
+    //                 break;
 
-                case "6":
-                    refusedByUser();
-                    break;
+    //             case "6":
+    //                 refusedByUser();
+    //                 break;
 
-                case "7":
-                    showMostActiveUser();
-                    break;
+    //             case "7":
+    //                 showMostActiveUser();
+    //                 break;
 
-                case "8":
-                    System.out.println(
-                    logService.actionsByType());
-                    break;
+    //             case "8":
+    //                 System.out.println(
+    //                 logService.actionsByType());
+    //                 break;
 
-                case "0":
-                    return;
+    //             case "0":
+    //                 return;
 
-                default:
-                    System.out.println("Choix invalide.");
-            }
-        }
-    }
+    //             default:
+    //                 System.out.println("Choix invalide.");
+    //         }
+    //     }
+    // }
 
-    public void refusedByUser() {
-        System.out.println("Enter le Utilisateur :");
-        String nomuser = scanner.nextLine();
+    // public void refusedByUser() {
+    //     System.out.println("Enter le Utilisateur :");
+    //     String nomuser = scanner.nextLine();
 
-        // System.out.println(nomuser);
+    //     // System.out.println(nomuser);
 
-        logService.refusedByUser(nomuser).forEach(System.out::println);
-    }
+    //     logService.refusedByUser(nomuser).forEach(System.out::println);
+    // }
 
-    public void showMostActiveUser(){
-        System.out.println(logService.showMostActiveUser().orElse("Aucun utilisateur"));
-    }
-
+    // public void showMostActiveUser(){
+    //     System.out.println(logService.showMostActiveUser().orElse("Aucun utilisateur"));
+    // }
 
 }

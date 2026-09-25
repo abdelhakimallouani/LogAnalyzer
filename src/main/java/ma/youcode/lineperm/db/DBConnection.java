@@ -6,15 +6,16 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-    private static final String URL = "jdbc:sqlite:audit.db";
+    private static Connection connection;
 
-    private static Connection connection ;
-    
-    private DBConnection(){};
+    private DBConnection() {
+    };
 
-    public static Connection getConnection(){
-        if(connection == null){
+    public static Connection getConnection() {
+        if (connection == null) {
             try {
+                // String URL = "jdbc:sqlite:C:/Users/HP/Desktop/LogAnalyzer/audit.db";
+                String URL = "jdbc:sqlite:audit.db";
                 connection = DriverManager.getConnection(URL);
                 System.out.println("bon connexion");
             } catch (SQLException e) {

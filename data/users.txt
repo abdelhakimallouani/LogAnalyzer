@@ -1,2 +1,3 @@
 hakim : $2a$10$GqYTlW5vadWohZFfE3VUM.6nnx79vl.IWpDwQD6krtcZ4sRyq3TT6
+ahmed : $2a$10$q0T/HZHetdjeM9LJguSYquUmGJMiNOFcugL79MUgl1LndXBPCSnwu
 anass : $2a$10$iZOpZe8b6YesuCNdCBWR2OXulrQtsu0XWkZ9yDBJGjrdNI2tWJvtG

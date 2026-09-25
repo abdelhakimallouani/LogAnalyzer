@@ -1,3 +1,17 @@
 {
-    "java.project.sourcePaths": ["src/main/java"]
+    "java.project.sourcePaths": [
+        "src/main/java"
+    ],
+    "java.project.referencedLibraries": [
+        "Lib/**/*.jar"
+    ],
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "LogAnalyzer SQLite",
+            "database": "${workspaceFolder:LogAnalyzer}/audit.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
 }
