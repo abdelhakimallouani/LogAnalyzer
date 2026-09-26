@@ -137,7 +137,6 @@ public class FileService {
 
     public void nano(String fileName, Long userId) {
 
-
         Optional<LinFile> searchFile = fichierDao.findByName(fileName);
 
         if (searchFile.isEmpty()) {
@@ -178,7 +177,6 @@ public class FileService {
             StringBuilder content = new StringBuilder();
             Scanner scanner = new Scanner(System.in);
 
-
             int lineCount = 0;
 
             while (true) {
@@ -206,66 +204,64 @@ public class FileService {
         }
     }
 
-    // public void chmod(String fileName, String permissionValue, String owner) {
+    public void chmod(String fileName, String permissionValue, Long userId) {
 
-    // try {
+        Optional<LinFile> searchFile = fichierDao.findByName(fileName);
 
-    // LinFile file = UserService.filesMap.get(fileName);
+        if (searchFile.isEmpty()) {
+            System.out.println("file not exist");
+            return;
+        }
 
-    // if (file == null) {
-    // System.out.println("File not found");
-    // logService.log(owner, "EDIT PERMISSION", fileName, false);
-    // return;
-    // }
+        Path filePath = FILES_DIRECTORY.resolve(fileName);
 
-    // if (!file.getOwner().equals(owner)) {
-    // System.out.println("You are not the owner of this file");
-    // logService.log(owner, "EDIT PERMISSION", fileName, false);
-    // return;
-    // }
+        if (!Files.exists(filePath)) {
+            System.out.println("File not found");
+            return;
+        }
 
-    // Permission permission = null;
+        LinFile file = searchFile.get();
 
-    // switch (permissionValue) {
-    // case "r":
-    // permission = Permission.R;
-    // break;
-    // case "-":
-    // permission = Permission.Normale;
-    // break;
-    // case "rw":
-    // permission = Permission.RW;
-    // break;
+        try {
 
-    // default:
-    // System.out.println("Invalid permission value. Use 'r', 'rw','-'");
-    // logService.log(owner, "EDIT PERMISSION", fileName, false);
-    // break;
-    // }
+            if (!file.getOwnerId().equals(userId)) {
+                System.out.println("You are not the owner of this file");
+                // logService.log(owner, "EDIT PERMISSION", fileName, false);
+                return;
+            }
 
-    // file.setPermission(permission);
-    // List<String> lines = Files.readAllLines(FILE_FILES);
-    // for (int i = 0; i < lines.size(); i++) {
-    // String[] parts = lines.get(i).split(" ", 3);
-    // if (parts.length == 3 && parts[1].equals(owner) && parts[2].equals(fileName))
-    // {
-    // lines.set(i, "rwd|" + permission.getValue() + " " + owner + " " + fileName);
-    // break;
-    // }
-    // }
-    // Files.write(FILE_FILES, lines);
-    // logService.log(owner, "EDIT PERMISSION", fileName, true);
-    // System.out.println("Permission updated for file: " + fileName + " to " +
-    // permission.getValue());
+            Permission permission = null;
 
-    // } catch (Exception e) {
-    // logService.log(owner, "EDIT PERMISSION", fileName, false);
-    // System.out.println("Error updating permissions in files.txt: " +
-    // e.getMessage());
-    // }
-    // }
+            switch (permissionValue) {
+                case "r":
+                    permission = Permission.R;
+                    break;
+                case "-":
+                    permission = Permission.Normale;
+                    break;
+                case "rw":
+                    permission = Permission.RW;
+                    break;
 
-    // public void stats(){
+                default:
+                    System.out.println("Invalid permission value. Use 'r', 'rw','-'");
+                    // logService.log(owner, "EDIT PERMISSION", fileName, false);
+                    break;
+            }
 
-    // }
+            List<LinFile> updatedFiles = fichierDao.updateDroits(file.getId(), permission.getValue());
+            if (updatedFiles != null) {
+                System.out.println("Permission updated for file: " + fileName + " to " + permission.getValue());
+            } else {
+                System.out.println("Error updating permissions for file: " + fileName);
+            }
+
+            // logService.log(owner, "EDIT PERMISSION", fileName, true);
+        } catch (Exception e) {
+            // logService.log(owner, "EDIT PERMISSION", fileName, false);
+            System.out.println("Error updating permissions in files.txt: " +
+                    e.getMessage());
+        }
+    }
+
 }

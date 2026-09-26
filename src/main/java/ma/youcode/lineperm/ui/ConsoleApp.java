@@ -80,9 +80,9 @@ public class ConsoleApp {
                 case "nano":
                     nano(mots);
                     break;
-                // case "chmod":
-                //     chmod(mots);
-                //     break;
+                case "chmod":
+                    chmod(mots);
+                    break;
                 // case "stats":
                 //     stats();
                 //     break;
@@ -184,17 +184,17 @@ public class ConsoleApp {
 
     }
 
-    // private void chmod(String[] mots) {
-    //     if (mots.length != 3) {
-    //         System.out.println("Usage : chmod <permission> <file>");
-    //         return;
-    //     }
+    private void chmod(String[] mots) {
+        if (mots.length != 3) {
+            System.out.println("Usage : chmod <permission> <file>");
+            return;
+        }
 
-    //     String permission = mots[1];
-    //     String fileName = mots[2];
+        String permission = mots[1];
+        String fileName = mots[2];
 
-    //     fileService.chmod(fileName, permission, currentUser.getLogin());
-    // }
+        fileService.chmod(fileName, permission, currentUser.getId());
+    }
 
     // private void stats() {
 

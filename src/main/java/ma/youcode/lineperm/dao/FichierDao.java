@@ -92,4 +92,15 @@ public class FichierDao extends AbstractDao<LinFile> {
         return Optional.empty();
     }
 
+    public List<LinFile> updateDroits(Long id, String droit){
+        String sql = "UPDATE fichiers SET permission = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, droit);
+            statement.setLong(2, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Erreur de mise à jour des droits : " + e.getMessage());
+        }
+        return findAll();
+    }
 }
