@@ -85,56 +85,55 @@ public class FileService {
                     owner = user.get().getLogin();
                 }
 
-                System.out.println("rwd|"+ file.getPermission().getValue()+ " "+ owner + " "+ file.getName());
+                System.out.println("rwd|" + file.getPermission().getValue() + " " + owner + " " + file.getName());
             }
         } catch (Exception e) {
             System.out.println("u dont have files" + e.getMessage());
         }
     }
 
-    // public void cat(String fileName, String owner) {
-    // try {
+    public void cat(String fileName, Long userId) {
 
-    // Path filePath = Path.of("data/files/" + fileName);
+        Optional<LinFile> searchFile = fichierDao.findByName(fileName);
 
-    // LinFile file = UserService.filesMap.get(fileName);
+        if (searchFile.isEmpty()) {
+            System.out.println("file not exist");
+            return;
+        }
 
-    // if (!Files.exists(filePath)) {
-    // System.out.println("You don't have this file");
-    // logService.log(owner, "LECTURE", fileName, false);
-    // return;
-    // }
+        LinFile file = searchFile.get();
 
-    // if (file == null) {
-    // System.out.println("File not found");
-    // return;
-    // }
+        if (!file.getOwnerId().equals(userId)) {
+            if (!file.getPermission().getValue().contains("r")) {
+                System.out.println("u dont have permission");
+                return ;
+            }
+        }
 
-    // Permission permission = file.getPermission();
+        Path filePath = FILES_DIRECTORY.resolve(fileName);
+        
+        if (!Files.exists(filePath)) {
+            System.out.println("File not found");
+            return;
+        }
 
-    // if (!file.getOwner().equals(owner)) {
+        try {
 
-    // if (!permission.getValue().contains("r")) {
-    // System.out.println("u dont have permission");
-    // logService.log(owner, "LECTURE", fileName, false);
-    // return;
-    // }
-    // }
+            String content = Files.readString(filePath);
 
-    // String content = Files.readString(filePath);
+            if (content.isEmpty()) {
+                System.out.println("ur file is vide");
+                return;
+            }
 
-    // if (content.isEmpty()) {
-    // System.out.println("ur file is vide");
-    // }
+            System.out.println(content);
+            // logService.log(owner, "LECTURE", fileName, true);
 
-    // System.out.println(content);
-    // logService.log(owner, "LECTURE", fileName, true);
-
-    // } catch (Exception e) {
-    // logService.log(owner, "LECTURE", fileName, false);
-    // System.out.println("u dont have files" + e.getMessage());
-    // }
-    // }
+        } catch (Exception e) {
+            // logService.log(owner, "LECTURE", fileName, false);
+            System.out.println("u dont have files" + e.getMessage());
+        }
+    }
 
     // public void nano(String fileName, String owner) {
     // Path filePath = Path.of("data/files/" + fileName);

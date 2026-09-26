@@ -74,9 +74,9 @@ public class ConsoleApp {
                 case "ls":
                     ls();
                     break;
-                // case "cat":
-                //     cat(mots[1], currentUser.getLogin());
-                //     break;
+                case "cat":
+                    cat(mots[1], currentUser.getId());
+                    break;
                 // case "nano":
                 //     nano(mots);
                 //     break;
@@ -168,9 +168,9 @@ public class ConsoleApp {
         fileService.ls();
     }
 
-    // private void cat(String fileName, String owner) {
-    //     fileService.cat(fileName, owner);
-    // }
+    private void cat(String fileName, Long userId) {
+        fileService.cat(fileName, userId);
+    }
 
     // private void nano(String[] mots) {
 

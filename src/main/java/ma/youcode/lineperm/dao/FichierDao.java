@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import ma.youcode.lineperm.model.LinFile;
 import ma.youcode.lineperm.enums.*;
@@ -66,4 +67,29 @@ public class FichierDao extends AbstractDao<LinFile> {
         }
         return files;
     }
+
+    public Optional<LinFile> findByName(String name) {
+        String sql = " SELECT id, name, owner_id, permission FROM fichiers WHERE name = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, name);
+
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+
+                LinFile file = mapResultSetToFile(result);
+                return Optional.of(file);
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erreur de recherche : "+ e.getMessage());
+            return null;
+        }
+
+        return Optional.empty();
+    }
+
 }
