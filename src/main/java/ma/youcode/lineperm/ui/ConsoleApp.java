@@ -77,9 +77,9 @@ public class ConsoleApp {
                 case "cat":
                     cat(mots[1], currentUser.getId());
                     break;
-                // case "nano":
-                //     nano(mots);
-                //     break;
+                case "nano":
+                    nano(mots);
+                    break;
                 // case "chmod":
                 //     chmod(mots);
                 //     break;
@@ -172,17 +172,17 @@ public class ConsoleApp {
         fileService.cat(fileName, userId);
     }
 
-    // private void nano(String[] mots) {
+    private void nano(String[] mots) {
 
-    //     if (mots.length != 2) {
-    //         System.out.println("use : nano <file>");
-    //     }
+        if (mots.length != 2) {
+            System.out.println("use : nano <file>");
+        }
 
-    //     String fileName = mots[1];
+        String fileName = mots[1];
 
-    //     fileService.nano(fileName, currentUser.getLogin());
+        fileService.nano(fileName, currentUser.getId());
 
-    // }
+    }
 
     // private void chmod(String[] mots) {
     //     if (mots.length != 3) {

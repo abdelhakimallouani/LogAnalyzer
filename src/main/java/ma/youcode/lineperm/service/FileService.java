@@ -106,12 +106,12 @@ public class FileService {
         if (!file.getOwnerId().equals(userId)) {
             if (!file.getPermission().getValue().contains("r")) {
                 System.out.println("u dont have permission");
-                return ;
+                return;
             }
         }
 
         Path filePath = FILES_DIRECTORY.resolve(fileName);
-        
+
         if (!Files.exists(filePath)) {
             System.out.println("File not found");
             return;
@@ -135,81 +135,76 @@ public class FileService {
         }
     }
 
-    // public void nano(String fileName, String owner) {
-    // Path filePath = Path.of("data/files/" + fileName);
+    public void nano(String fileName, Long userId) {
 
-    // LinFile file = UserService.filesMap.get(fileName);
 
-    // if (!Files.exists(filePath)) {
-    // System.out.println("You don't have this file");
-    // logService.log(owner, "LECTURE", fileName, false);
-    // return;
-    // }
+        Optional<LinFile> searchFile = fichierDao.findByName(fileName);
 
-    // if (file == null) {
-    // System.out.println("File not found");
-    // return;
-    // }
+        if (searchFile.isEmpty()) {
+            System.out.println("file not exist");
+            return;
+        }
 
-    // Permission permission = file.getPermission();
+        Path filePath = FILES_DIRECTORY.resolve(fileName);
 
-    // // System.out.println(permission.getValue());
+        if (!Files.exists(filePath)) {
+            System.out.println("File not found");
+            return;
+        }
 
-    // if (!file.getOwner().equals(owner)) {
+        LinFile file = searchFile.get();
 
-    // if (!permission.getValue().contains("rw")) {
-    // System.out.println("u dont have permission");
-    // logService.log(owner, "EDIT", fileName, false);
-    // return;
-    // }
-    // }
+        if (!file.getOwnerId().equals(userId)) {
+            if (!file.getPermission().getValue().contains("rw")) {
+                System.out.println("u dont have permission");
+                return;
+            }
+        }
 
-    // try {
+        try {
 
-    // System.out.println("Saisis ton texte. Tape EOF seul sur une ligne pour
-    // enregistrer.");
+            System.out.println("Saisis ton texte. Tape EOF seul sur une ligne pourenregistrer.");
 
-    // String oldContent = Files.readString(filePath);
+            String oldContent = Files.readString(filePath);
 
-    // if (oldContent.isEmpty()) {
-    // System.out.println("file is vide ");
-    // logService.log(owner, "EDIT", fileName, false);
-    // } else {
-    // System.out.println(oldContent);
-    // logService.log(owner, "EDIT", fileName, true);
-    // }
+            if (oldContent.isEmpty()) {
+                System.out.println("file is vide ");
+                // logService.log(owner, "EDIT", fileName, false);
+            } else {
+                System.out.println(oldContent);
+                // logService.log(owner, "EDIT", fileName, true);
+            }
 
-    // StringBuilder content = new StringBuilder();
+            StringBuilder content = new StringBuilder();
+            Scanner scanner = new Scanner(System.in);
 
-    // int lineCount = 0;
 
-    // while (true) {
+            int lineCount = 0;
 
-    // String line = scanner.nextLine();
+            while (true) {
 
-    // if (line.equals("EOF")) {
-    // break;
-    // }
+                String line = scanner.nextLine();
 
-    // content.append(line);
-    // content.append(System.lineSeparator());
+                if (line.equals("EOF")) {
+                    break;
+                }
 
-    // lineCount++;
+                content.append(line).append(System.lineSeparator());
 
-    // }
+                lineCount++;
 
-    // Files.writeString(filePath, content, StandardOpenOption.APPEND);
-    // logService.log(owner, "EDIT", fileName, true);
+            }
 
-    // System.out.println("File : " + fileName + ", enregister (" + lineCount + "
-    // ligne)");
+            Files.writeString(filePath, content, StandardOpenOption.APPEND);
+            // logService.log(owner, "EDIT", fileName, true);
 
-    // } catch (Exception e) {
-    // logService.log(owner, "EDIT", fileName, false);
-    // System.out.println("Erreur lors de l'édition : " + e.getMessage());
-    // }
+            System.out.println("File : " + fileName + ", enregister (" + lineCount + "ligne)");
 
-    // }
+        } catch (Exception e) {
+            // logService.log(owner, "EDIT", fileName, false);
+            System.out.println("Erreur lors de l'édition : " + e.getMessage());
+        }
+    }
 
     // public void chmod(String fileName, String permissionValue, String owner) {
 
