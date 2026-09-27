@@ -243,9 +243,9 @@ public class ConsoleApp {
                     refusedByUser();
                     break;
 
-                // case "7":
-                // showMostActiveUser();
-                // break;
+                case "7":
+                    logService.showMostActiveUser();
+                    break;
 
                 // case "8":
                 // System.out.println(
@@ -269,10 +269,5 @@ public class ConsoleApp {
 
         logService.refusedByUser(nomuser);
     }
-
-    // public void showMostActiveUser(){
-    // System.out.println(logService.showMostActiveUser().orElse("Aucun
-    // utilisateur"));
-    // }
 
 }

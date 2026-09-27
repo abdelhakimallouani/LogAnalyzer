@@ -52,12 +52,9 @@ public class LogService {
         logDao.refusedByUser(username);
     }
 
-    // public Optional<String> showMostActiveUser() {
-    // return logs.stream().collect(Collectors.groupingBy(AccessLog::getUtilisateur,
-    // Collectors.counting())).entrySet()
-    // .stream().max(Map.Entry.comparingByValue())
-    // .map(entry -> entry.getKey() + " (" + entry.getValue() + " actions)");
-    // }
+    public void showMostActiveUser() {
+        logDao.showMostActiveUser();
+    }
 
     // public Map<String, Long> actionsByType() {
     // return logs.stream().collect(Collectors.groupingBy(AccessLog::getAction,

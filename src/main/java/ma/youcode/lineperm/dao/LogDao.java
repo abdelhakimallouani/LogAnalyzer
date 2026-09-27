@@ -123,4 +123,20 @@ public class LogDao extends AbstractDao<AccessLog> {
             System.out.println("Erreur : " + e.getMessage());
         }
     }
+
+    public  void showMostActiveUser(){
+        String sql = "SELECT u.login, COUNT(*) as action_count FROM logs l JOIN users u ON l.user_id = u.id GROUP BY u.id ORDER BY action_count DESC LIMIT 1";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                String userLogin = result.getString("login");
+                int actionCount = result.getInt("action_count");
+                System.out.println("active user: " + userLogin + ", " + actionCount + " actions");
+            } else {
+                System.out.println("No actions found");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur : " + e.getMessage());
+        }
+    }
 }
