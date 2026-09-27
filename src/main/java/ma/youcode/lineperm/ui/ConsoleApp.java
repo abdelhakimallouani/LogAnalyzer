@@ -220,43 +220,41 @@ public class ConsoleApp {
             switch (choix.trim()) {
 
                 case "1":
-                        logService.countActions();
+                    logService.countActions();
                     break;
 
-                // case "2":
-                //     System.out.println(
-                //             "Nombre d'acces refuses : "
-                //                     + logService.countRefused());
-                //     break;
+                case "2":
+                    logService.countRefused();
+                    break;
 
                 // case "3":
-                //     System.out.println(
-                //             "Utilisateurs distincts : "
-                //                     + logService.countDistinctUsers());
-                //     break;
+                // System.out.println(
+                // "Utilisateurs distincts : "
+                // + logService.countDistinctUsers());
+                // break;
 
                 // case "4":
-                //     System.out.println(
-                //             logService.actionsByUser());
-                //     break;
+                // System.out.println(
+                // logService.actionsByUser());
+                // break;
 
                 // case "5":
-                //     System.out.println(
-                //             logService.top3Files());
-                //     break;
+                // System.out.println(
+                // logService.top3Files());
+                // break;
 
                 // case "6":
-                //     refusedByUser();
-                //     break;
+                // refusedByUser();
+                // break;
 
                 // case "7":
-                //     showMostActiveUser();
-                //     break;
+                // showMostActiveUser();
+                // break;
 
                 // case "8":
-                //     System.out.println(
-                //     logService.actionsByType());
-                //     break;
+                // System.out.println(
+                // logService.actionsByType());
+                // break;
 
                 case "0":
                     return;
@@ -268,16 +266,17 @@ public class ConsoleApp {
     }
 
     // public void refusedByUser() {
-    //     System.out.println("Enter le Utilisateur :");
-    //     String nomuser = scanner.nextLine();
+    // System.out.println("Enter le Utilisateur :");
+    // String nomuser = scanner.nextLine();
 
-    //     // System.out.println(nomuser);
+    // // System.out.println(nomuser);
 
-    //     logService.refusedByUser(nomuser).forEach(System.out::println);
+    // logService.refusedByUser(nomuser).forEach(System.out::println);
     // }
 
     // public void showMostActiveUser(){
-    //     System.out.println(logService.showMostActiveUser().orElse("Aucun utilisateur"));
+    // System.out.println(logService.showMostActiveUser().orElse("Aucun
+    // utilisateur"));
     // }
 
 }

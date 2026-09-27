@@ -28,34 +28,41 @@ public class LogService {
         System.out.println("Nombre total d'actions : " + total);
     }
 
-    // public long countRefused() {
-    //     return logs.stream().filter(log -> !log.getResultat()).count();
-    // }
+    public void countRefused() {
+        int refused = logDao.countRefusedActions();
+
+        System.out.println("Nombre d'acces refuses : " + refused);
+    }
 
     // public long countDistinctUsers() {
-    //     return logs.stream().map(AccessLog::getUtilisateur).distinct().count();
+    // return logs.stream().map(AccessLog::getUtilisateur).distinct().count();
     // }
 
     // public Map<String, Long> actionsByUser() {
-    //     return logs.stream().collect(Collectors.groupingBy(AccessLog::getUtilisateur, Collectors.counting()));
+    // return logs.stream().collect(Collectors.groupingBy(AccessLog::getUtilisateur,
+    // Collectors.counting()));
     // }
 
     // public Map<String, Long> top3Files() {
-    //     return logs.stream().collect(Collectors.groupingBy(AccessLog::getFichier, Collectors.counting()));
+    // return logs.stream().collect(Collectors.groupingBy(AccessLog::getFichier,
+    // Collectors.counting()));
     // }
 
     // public List<AccessLog> refusedByUser(String username) {
-    //     return logs.stream().filter(log -> log.getUtilisateur().equalsIgnoreCase(username) && !log.getResultat())
-    //             .toList();
+    // return logs.stream().filter(log ->
+    // log.getUtilisateur().equalsIgnoreCase(username) && !log.getResultat())
+    // .toList();
     // }
 
     // public Optional<String> showMostActiveUser() {
-    //     return logs.stream().collect(Collectors.groupingBy(AccessLog::getUtilisateur, Collectors.counting())).entrySet()
-    //             .stream().max(Map.Entry.comparingByValue())
-    //             .map(entry -> entry.getKey() + " (" + entry.getValue() + " actions)");
+    // return logs.stream().collect(Collectors.groupingBy(AccessLog::getUtilisateur,
+    // Collectors.counting())).entrySet()
+    // .stream().max(Map.Entry.comparingByValue())
+    // .map(entry -> entry.getKey() + " (" + entry.getValue() + " actions)");
     // }
 
     // public Map<String, Long> actionsByType() {
-    //     return logs.stream().collect(Collectors.groupingBy(AccessLog::getAction, Collectors.counting()));
+    // return logs.stream().collect(Collectors.groupingBy(AccessLog::getAction,
+    // Collectors.counting()));
     // }
 }
