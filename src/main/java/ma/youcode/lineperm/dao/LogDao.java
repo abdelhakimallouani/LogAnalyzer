@@ -30,4 +30,20 @@ public class LogDao extends AbstractDao<AccessLog> {
         }
         return null;
     }
+
+    public int countTotalActions() {
+        String sql = "SELECT COUNT(*) FROM logs";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            ResultSet resultat = statement.executeQuery();
+            if (resultat.next()) {
+                return resultat.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("errur : " + e.getMessage());
+        }
+        return 0;
+    }
+
+
+
 }
