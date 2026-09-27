@@ -56,8 +56,7 @@ public class LogService {
         logDao.showMostActiveUser();
     }
 
-    // public Map<String, Long> actionsByType() {
-    // return logs.stream().collect(Collectors.groupingBy(AccessLog::getAction,
-    // Collectors.counting()));
-    // }
+    public void actionsByType() {
+        logDao.actionsByType();
+    }
 }

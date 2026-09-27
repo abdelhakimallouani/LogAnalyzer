@@ -247,10 +247,9 @@ public class ConsoleApp {
                     logService.showMostActiveUser();
                     break;
 
-                // case "8":
-                // System.out.println(
-                // logService.actionsByType());
-                // break;
+                case "8":
+                logService.actionsByType();
+                break;
 
                 case "0":
                     return;
