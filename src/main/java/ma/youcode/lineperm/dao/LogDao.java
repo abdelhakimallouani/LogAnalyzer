@@ -63,4 +63,24 @@ public class LogDao extends AbstractDao<AccessLog> {
         return 0;
     }
 
+    public int countDistinctUsers() {
+
+        String sql = " SELECT COUNT(DISTINCT user_id) FROM logs";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                return result.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            System.out.println( "Erreur : " + e.getMessage());
+        }
+
+        return 0;
+    }
+
+    
 }

@@ -227,11 +227,9 @@ public class ConsoleApp {
                     logService.countRefused();
                     break;
 
-                // case "3":
-                // System.out.println(
-                // "Utilisateurs distincts : "
-                // + logService.countDistinctUsers());
-                // break;
+                case "3":
+                    logService.countDistinctUsers();
+                break;
 
                 // case "4":
                 // System.out.println(

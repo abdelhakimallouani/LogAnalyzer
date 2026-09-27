@@ -34,9 +34,11 @@ public class LogService {
         System.out.println("Nombre d'acces refuses : " + refused);
     }
 
-    // public long countDistinctUsers() {
-    // return logs.stream().map(AccessLog::getUtilisateur).distinct().count();
-    // }
+    public void countDistinctUsers() {
+        int users = logDao.countDistinctUsers();
+
+        System.out.println("Nombre d'utilisateurs distincts : " + users);
+    }
 
     // public Map<String, Long> actionsByUser() {
     // return logs.stream().collect(Collectors.groupingBy(AccessLog::getUtilisateur,
