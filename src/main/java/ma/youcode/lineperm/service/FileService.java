@@ -1,8 +1,10 @@
 package ma.youcode.lineperm.service;
 
 import ma.youcode.lineperm.dao.FichierDao;
+import ma.youcode.lineperm.dao.LogDao;
 import ma.youcode.lineperm.dao.UserDao;
 import ma.youcode.lineperm.enums.Permission;
+import ma.youcode.lineperm.model.AccessLog;
 import ma.youcode.lineperm.model.LinFile;
 import ma.youcode.lineperm.model.User;
 
@@ -18,11 +20,13 @@ public class FileService {
     // private final Scanner scanner;
     private final FichierDao fichierDao;
     private final UserDao userDao;
+    private final LogDao logDao;
 
     public FileService() {
 
         fichierDao = new FichierDao();
         userDao = new UserDao();
+        logDao = new LogDao();
 
         try {
             if (!Files.exists(FILES_DIRECTORY)) {
@@ -98,6 +102,7 @@ public class FileService {
 
         if (searchFile.isEmpty()) {
             System.out.println("file not exist");
+            saveLog(userId, null, "LECTURE", false);
             return;
         }
 
@@ -106,6 +111,7 @@ public class FileService {
         if (!file.getOwnerId().equals(userId)) {
             if (!file.getPermission().getValue().contains("r")) {
                 System.out.println("u dont have permission");
+                saveLog(userId, file.getId(), "LECTURE", false);
                 return;
             }
         }
@@ -114,6 +120,7 @@ public class FileService {
 
         if (!Files.exists(filePath)) {
             System.out.println("File not found");
+            saveLog(userId, file.getId(), "LECTURE", false);
             return;
         }
 
@@ -128,10 +135,13 @@ public class FileService {
 
             System.out.println(content);
             // logService.log(owner, "LECTURE", fileName, true);
+            saveLog(userId, file.getId(), "LECTURE", true);
 
         } catch (Exception e) {
             // logService.log(owner, "LECTURE", fileName, false);
             System.out.println("u dont have files" + e.getMessage());
+            saveLog(userId, file.getId(), "LECTURE", false);
+
         }
     }
 
@@ -264,4 +274,8 @@ public class FileService {
         }
     }
 
+    public void saveLog(Long userId, Long fileId, String action, boolean success) {
+        AccessLog log = new AccessLog(userId, fileId, action, success ? "OK" : "REFUSED");
+        logDao.save(log);
+    }
 }
