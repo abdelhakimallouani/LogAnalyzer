@@ -151,6 +151,8 @@ public class FileService {
 
         if (searchFile.isEmpty()) {
             System.out.println("file not exist");
+            saveLog(userId, null, "EDIT", false);
+
             return;
         }
 
@@ -158,6 +160,7 @@ public class FileService {
 
         if (!Files.exists(filePath)) {
             System.out.println("File not found");
+            saveLog(userId, null, "EDIT", false);
             return;
         }
 
@@ -166,6 +169,7 @@ public class FileService {
         if (!file.getOwnerId().equals(userId)) {
             if (!file.getPermission().getValue().contains("rw")) {
                 System.out.println("u dont have permission");
+                saveLog(userId, file.getId(), "EDIT", false);
                 return;
             }
         }
@@ -178,10 +182,10 @@ public class FileService {
 
             if (oldContent.isEmpty()) {
                 System.out.println("file is vide ");
-                // logService.log(owner, "EDIT", fileName, false);
+                saveLog(userId, file.getId(), "EDIT", false);
             } else {
                 System.out.println(oldContent);
-                // logService.log(owner, "EDIT", fileName, true);
+                saveLog(userId, file.getId(), "EDIT", true);
             }
 
             StringBuilder content = new StringBuilder();
@@ -205,12 +209,14 @@ public class FileService {
 
             Files.writeString(filePath, content, StandardOpenOption.APPEND);
             // logService.log(owner, "EDIT", fileName, true);
+            saveLog(userId, file.getId(), "EDIT", true);
 
             System.out.println("File : " + fileName + ", enregister (" + lineCount + "ligne)");
 
         } catch (Exception e) {
             // logService.log(owner, "EDIT", fileName, false);
             System.out.println("Erreur lors de l'édition : " + e.getMessage());
+            saveLog(userId, file.getId(), "EDIT", false);
         }
     }
 
@@ -220,6 +226,7 @@ public class FileService {
 
         if (searchFile.isEmpty()) {
             System.out.println("file not exist");
+            saveLog(userId, null, "EDIT PERMISSION", false);
             return;
         }
 
@@ -227,6 +234,7 @@ public class FileService {
 
         if (!Files.exists(filePath)) {
             System.out.println("File not found");
+            saveLog(userId, null, "EDIT PERMISSION", false);
             return;
         }
 
@@ -236,6 +244,7 @@ public class FileService {
 
             if (!file.getOwnerId().equals(userId)) {
                 System.out.println("You are not the owner of this file");
+                saveLog(userId, file.getId(), "EDIT PERMISSION", false);
                 // logService.log(owner, "EDIT PERMISSION", fileName, false);
                 return;
             }
@@ -255,6 +264,7 @@ public class FileService {
 
                 default:
                     System.out.println("Invalid permission value. Use 'r', 'rw','-'");
+                    saveLog(userId, file.getId(), "EDIT PERMISSION", false);
                     // logService.log(owner, "EDIT PERMISSION", fileName, false);
                     break;
             }
@@ -262,13 +272,16 @@ public class FileService {
             List<LinFile> updatedFiles = fichierDao.updateDroits(file.getId(), permission.getValue());
             if (updatedFiles != null) {
                 System.out.println("Permission updated for file: " + fileName + " to " + permission.getValue());
+                saveLog(userId, file.getId(), "EDIT PERMISSION", true);
             } else {
                 System.out.println("Error updating permissions for file: " + fileName);
+                saveLog(userId, file.getId(), "EDIT PERMISSION", false);
             }
 
             // logService.log(owner, "EDIT PERMISSION", fileName, true);
         } catch (Exception e) {
             // logService.log(owner, "EDIT PERMISSION", fileName, false);
+            saveLog(userId, file.getId(), "EDIT PERMISSION", false);
             System.out.println("Error updating permissions in files.txt: " +
                     e.getMessage());
         }
