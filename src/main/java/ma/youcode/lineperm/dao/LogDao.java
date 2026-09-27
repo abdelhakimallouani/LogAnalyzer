@@ -95,4 +95,18 @@ public class LogDao extends AbstractDao<AccessLog> {
             System.out.println("Erreur : " + e.getMessage());
         }
     }
+
+    public void top3Files() {
+        String sql = "SELECT f.name, COUNT(*) as action_count FROM logs l JOIN fichiers f ON l.file_id = f.id GROUP BY f.id ORDER BY action_count DESC LIMIT 3";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                String fileName = result.getString("name");
+                int actionCount = result.getInt("action_count");
+                System.out.println(fileName + " : " + actionCount + " actions");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur : " + e.getMessage());
+        }
+    }
 }

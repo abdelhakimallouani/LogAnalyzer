@@ -44,10 +44,9 @@ public class LogService {
         logDao.actionsByUser();
     }
 
-    // public Map<String, Long> top3Files() {
-    // return logs.stream().collect(Collectors.groupingBy(AccessLog::getFichier,
-    // Collectors.counting()));
-    // }
+    public void top3Files() {
+        logDao.top3Files();
+    }
 
     // public List<AccessLog> refusedByUser(String username) {
     // return logs.stream().filter(log ->

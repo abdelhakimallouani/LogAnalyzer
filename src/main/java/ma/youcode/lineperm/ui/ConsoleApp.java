@@ -235,10 +235,9 @@ public class ConsoleApp {
                     logService.actionsByUser();
                     break;
 
-                // case "5":
-                // System.out.println(
-                // logService.top3Files());
-                // break;
+                case "5":
+                    logService.top3Files();
+                    break;
 
                 // case "6":
                 // refusedByUser();
