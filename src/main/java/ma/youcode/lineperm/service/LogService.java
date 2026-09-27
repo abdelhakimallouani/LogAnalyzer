@@ -48,11 +48,9 @@ public class LogService {
         logDao.top3Files();
     }
 
-    // public List<AccessLog> refusedByUser(String username) {
-    // return logs.stream().filter(log ->
-    // log.getUtilisateur().equalsIgnoreCase(username) && !log.getResultat())
-    // .toList();
-    // }
+    public void refusedByUser(String username) {
+        logDao.refusedByUser(username);
+    }
 
     // public Optional<String> showMostActiveUser() {
     // return logs.stream().collect(Collectors.groupingBy(AccessLog::getUtilisateur,

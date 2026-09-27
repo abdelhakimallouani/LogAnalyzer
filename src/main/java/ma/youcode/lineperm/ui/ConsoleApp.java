@@ -239,9 +239,9 @@ public class ConsoleApp {
                     logService.top3Files();
                     break;
 
-                // case "6":
-                // refusedByUser();
-                // break;
+                case "6":
+                    refusedByUser();
+                    break;
 
                 // case "7":
                 // showMostActiveUser();
@@ -261,14 +261,14 @@ public class ConsoleApp {
         }
     }
 
-    // public void refusedByUser() {
-    // System.out.println("Enter le Utilisateur :");
-    // String nomuser = scanner.nextLine();
+    public void refusedByUser() {
+        System.out.println("Enter le Utilisateur :");
+        String nomuser = scanner.nextLine();
 
-    // // System.out.println(nomuser);
+        // System.out.println(nomuser);
 
-    // logService.refusedByUser(nomuser).forEach(System.out::println);
-    // }
+        logService.refusedByUser(nomuser);
+    }
 
     // public void showMostActiveUser(){
     // System.out.println(logService.showMostActiveUser().orElse("Aucun

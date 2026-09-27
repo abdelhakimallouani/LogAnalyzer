@@ -109,4 +109,18 @@ public class LogDao extends AbstractDao<AccessLog> {
             System.out.println("Erreur : " + e.getMessage());
         }
     }
+    public void refusedByUser(String userLogin) {
+        String sql = "SELECT f.name, COUNT(*) as refused_count FROM logs l JOIN fichiers f ON l.file_id = f.id JOIN users u ON l.user_id = u.id WHERE l.resultat = 'REFUSED' AND u.login = ? GROUP BY f.id";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, userLogin);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                String fileName = result.getString("name");
+                int refusedCount = result.getInt("refused_count");
+                System.out.println(fileName + " : " + refusedCount + " refusals");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur : " + e.getMessage());
+        }
+    }
 }
