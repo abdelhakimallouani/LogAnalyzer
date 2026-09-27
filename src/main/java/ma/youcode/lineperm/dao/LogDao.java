@@ -82,5 +82,17 @@ public class LogDao extends AbstractDao<AccessLog> {
         return 0;
     }
 
-    
+    public void actionsByUser(){
+        String sql = "SELECT u.login, COUNT(*) as action_count FROM logs l JOIN users u ON l.user_id = u.id GROUP BY u.id";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                String userLogin = result.getString("login");
+                int actionCount = result.getInt("action_count");
+                System.out.println(userLogin + " : " + actionCount + " actions");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur : " + e.getMessage());
+        }
+    }
 }

@@ -40,10 +40,9 @@ public class LogService {
         System.out.println("Nombre d'utilisateurs distincts : " + users);
     }
 
-    // public Map<String, Long> actionsByUser() {
-    // return logs.stream().collect(Collectors.groupingBy(AccessLog::getUtilisateur,
-    // Collectors.counting()));
-    // }
+    public void actionsByUser() {
+        logDao.actionsByUser();
+    }
 
     // public Map<String, Long> top3Files() {
     // return logs.stream().collect(Collectors.groupingBy(AccessLog::getFichier,

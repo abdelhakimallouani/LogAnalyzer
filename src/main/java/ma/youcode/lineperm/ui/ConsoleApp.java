@@ -229,12 +229,11 @@ public class ConsoleApp {
 
                 case "3":
                     logService.countDistinctUsers();
-                break;
+                    break;
 
-                // case "4":
-                // System.out.println(
-                // logService.actionsByUser());
-                // break;
+                case "4":
+                    logService.actionsByUser();
+                    break;
 
                 // case "5":
                 // System.out.println(
